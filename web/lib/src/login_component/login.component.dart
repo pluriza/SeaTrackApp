@@ -9,21 +9,37 @@ import 'package:web/src/index.dart';
 @Component(
   selector: 'login-page',
   templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css'],
   directives: [
     coreDirectives, 
     formDirectives,
     materialInputDirectives,
+    MaterialButtonComponent,
   ],
   pipes: [BlocPipe]
 )
 
 class LoginComponent implements OnInit, OnDestroy {
+  @Input() UserRepository userRepository;
+  @Input() AuthenticationBloc authenticationBloc;
+
+  LoginBloc _loginBloc;
+
   @override
   void ngOnInit() {
-
+    _loginBloc = LoginBloc(
+      userRepository: userRepository,
+      authenticationBloc: authenticationBloc
+    );
   }
+
   @override
   void ngOnDestroy() {
+    _loginBloc.dispose();
+  }
 
+  void onSubmit() {
+    _loginBloc.dispatch(
+      LoginButtonPressed(username: 'admin', password: '1234'));
   }
 }

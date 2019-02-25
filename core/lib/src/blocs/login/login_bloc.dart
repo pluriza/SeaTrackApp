@@ -14,11 +14,18 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   LoginBloc({
     @required this.userRepository,
     @required this.authenticationBloc,
-  })  : assert(userRepository != null),
-        assert(authenticationBloc != null);
+  })  : assert(userRepository != null,
+        'userRepository missing at LoginBloc'),
+        assert(authenticationBloc != null, 
+        'authenticationBloc missing at LoginBloc');
 
   @override
   LoginState get initialState => LoginInitial();
+
+  @override
+  void onTransition(Transition transition) {
+    print('Login Bloc Current State: ${transition.currentState}');
+  }
 
   @override
   Stream<LoginState> mapEventToState(
