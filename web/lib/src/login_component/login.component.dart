@@ -9,10 +9,17 @@ import 'package:web/src/index.dart';
 @Component(
   selector: 'login-page',
   templateUrl: './login.component.html',
+  styleUrls: ['login.component.css'],
   directives: [
     coreDirectives, 
     formDirectives,
-    materialInputDirectives,
+    materialInputDirectives,    
+    MaterialIconComponent,
+    MaterialTooltipTargetDirective,
+    MaterialMultilineInputComponent,
+    MaterialInputComponent,
+    MaterialButtonComponent
+    
   ],
   pipes: [BlocPipe]
 )
@@ -26,4 +33,6 @@ class LoginComponent implements OnInit, OnDestroy {
   void ngOnDestroy() {
 
   }
+
+  void loginUser() {}
 }
