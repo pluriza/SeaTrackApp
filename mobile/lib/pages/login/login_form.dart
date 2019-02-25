@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile/shared/button/sea_button.dart';
 
 class LoginForm extends StatefulWidget {
 
@@ -46,6 +47,10 @@ class _LoginFormState extends State<LoginForm> {
                       ),
                       controller: _passwordController,
                       obscureText: true
+                    ),
+                    SeaButton (
+                      onClicked: _onLoginButtonPressed,
+                      title:'Sign In'
                     )
                   ]
                 )
@@ -55,4 +60,6 @@ class _LoginFormState extends State<LoginForm> {
       )
     );
   }
+
+  _onLoginButtonPressed() {}
 }
