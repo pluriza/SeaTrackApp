@@ -1,10 +1,10 @@
 <section>
     <img src="https://i.etsystatic.com/13221305/r/il/abdd68/1224018852/il_570xN.1224018852_ryip.jpg" width="50%">
-    <material-input leadingGlyph="account_circle" leadingGlyphAriaLabel="Username"  floatingLabel type="text" label="Username" required ></material-input>
+    <material-input name="username" #username="ngModel" leadingGlyph="account_circle" leadingGlyphAriaLabel="Username"  floatingLabel type="text" label="Username" required ></material-input>
     <br>
-    <material-input leadingGlyph="security" leadingGlyphAriaLabel="Password" floatingLabel type="text" label="Password" required>
+    <material-input name="password" #password="ngModel" leadingGlyph="security" leadingGlyphAriaLabel="Password" floatingLabel type="text" label="Password" required>
         
     </material-input>
     <br>
-    <material-button class="red">Login</material-button>
+    <material-button>Login</material-button>
 </section>
