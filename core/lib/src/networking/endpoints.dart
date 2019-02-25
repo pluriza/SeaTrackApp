@@ -5,6 +5,6 @@ class Endpoints {
   };
 
   static const Map<String, String> users = {
-    
+    "users": '',
   };
 }
