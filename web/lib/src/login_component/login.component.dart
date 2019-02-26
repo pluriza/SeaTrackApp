@@ -2,6 +2,7 @@ import 'package:angular/angular.dart';
 import 'package:angular_bloc/angular_bloc.dart';
 import 'package:angular_components/angular_components.dart';
 import 'package:angular_forms/angular_forms.dart';
+import 'package:angular_router/angular_router.dart';
 
 import 'package:core/core.dart';
 import 'package:web/src/index.dart';
@@ -25,6 +26,8 @@ import 'package:web/src/index.dart';
 )
 
 class LoginComponent implements OnInit, OnDestroy {
+  
+  Router router;
   @override
   void ngOnInit() {
 
@@ -33,6 +36,9 @@ class LoginComponent implements OnInit, OnDestroy {
   void ngOnDestroy() {
 
   }
+  LoginComponent(this.router);
 
-  void loginUser() {}
+  void loginUser() {
+    this.router.navigateByUrl('footer');
+  }
 }

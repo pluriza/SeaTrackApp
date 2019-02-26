@@ -31,4 +31,5 @@ import 'src/routes.dart';
 )
 class AppComponent {
   // Nothing here yet. All logic is in TodoListComponent.
+  Router router;
 }

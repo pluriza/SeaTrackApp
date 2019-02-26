@@ -1,6 +1,6 @@
 section::before {
         background-image: url('http://farm5.static.flickr.com/4081/5443254934_1f332d633a_o.jpg');
-        background-size: cover;
+        background-size: cover;        
         content: "";
         display: block;
         position: absolute;
@@ -9,25 +9,22 @@ section::before {
         width: 100%;
         height: 100%;
         z-index: -4;
-        opacity: 0.2;
-     
+        opacity: 0.2;     
 }
 
 section {
-    align-items: center!important;    
-    display: flex;
-    flex-wrap: wrap;
-    -ms-flex-wrap: wrap;
+    display: table;
+    margin: 0 auto;
     justify-content: center!important;
-    padding: 15px;
-    height: 100%;
-    width: 100%;
+    padding: 15px;    
+    max-width: 600px;
 }
 
-
 img {
-    padding: 10px;
     opacity: 0.5;
+    display: block;
+    margin-left: 25%;
+    margin-right: 25%;
 }
 
 material-button {
