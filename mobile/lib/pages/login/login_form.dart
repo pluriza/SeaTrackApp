@@ -52,41 +52,38 @@ class _LoginFormState extends State<LoginForm> {
             children: <Widget> [
               new Padding (
                 padding: EdgeInsets.all(20.0),
-                child: new Padding (
-                    padding: EdgeInsets.all(20.0),
-                    child: Column (
-                      children: <Widget> [
-                        TextFormField (
-                          decoration: InputDecoration (
-                            prefixIcon: Icon(Icons.person),
-                            labelText: 'Username',
-                            labelStyle: TextStyle(
-                              fontSize: 16.0,
-                              letterSpacing: 0.3
-                            )
-                          ),
-                          controller: _usernameController,
-                        ),
-                        TextFormField (
-                          decoration: InputDecoration (
-                            prefixIcon: Icon(Icons.lock_outline),
-                            labelText: 'Password',
-                            labelStyle: TextStyle(
-                              fontSize: 16.0,
-                              letterSpacing: 0.3
-                            )
-                          ),
-                          controller: _passwordController,
-                          obscureText: true
-                        ),
-                        SeaButton (
-                          onClicked: _onLoginButtonPressed,
-                          title:'Sign In'
+                child: Column (
+                  children: <Widget> [
+                    TextFormField (
+                      decoration: InputDecoration (
+                        prefixIcon: Icon(Icons.person),
+                        labelText: 'Username',
+                        labelStyle: TextStyle(
+                          fontSize: 16.0,
+                          letterSpacing: 0.3
                         )
-                      ]
+                      ),
+                      controller: _usernameController,
+                    ),
+                    TextFormField (
+                      decoration: InputDecoration (
+                        prefixIcon: Icon(Icons.lock_outline),
+                        labelText: 'Password',
+                        labelStyle: TextStyle(
+                          fontSize: 16.0,
+                          letterSpacing: 0.3
+                        )
+                      ),
+                      controller: _passwordController,
+                      obscureText: true
+                    ),
+                    SeaButton (
+                      onClicked: _onLoginButtonPressed(),
+                      title:'Sign In'
                     )
-                  )
+                  ]
                 )
+              )
             ]
           )
         );
