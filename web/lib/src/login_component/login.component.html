@@ -1,7 +1,15 @@
 <material-content>
-    <material-input floatingLabel type="text" label="Username"></material-input>
-    <br>
-    <material-input floatingLabel type="text" label="Password"></material-input>
-    <br>
-    <material-button raised compact (click)="onSubmit()">Compact</material-button>
+    <form>
+        <div class="form-group">
+            <material-input floatingLabel type="text" label="Username" [(ngModel)]="credentials.username" ngControl="username" required></material-input>
+        </div>
+        <div class="form-group">
+            <material-input floatingLabel type="text" label="Password" [(ngModel)]="credentials.password" ngControl="password" required></material-input>
+        </div>
+        <div class="row">
+            <div class="col-auto">
+                <material-button raised compact (click)="onSubmit()">Compact</material-button>
+            </div>
+        </div>
+    </form>
 </material-content>

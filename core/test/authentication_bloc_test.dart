@@ -3,15 +3,15 @@ import "package:test/test.dart";
 import 'package:mockito/mockito.dart';
 import 'package:core/core.dart';
 
-class MockUserRepository extends Mock implements UserRepository {}
+class MockLoginProvider extends Mock implements LoginApiProvider {}
 
 void main() {
   AuthenticationBloc authenticationBloc;
-  MockUserRepository userRepository;
+  MockLoginProvider loginApiProvider;
 
   setUp(() {
-    userRepository = MockUserRepository();
-    authenticationBloc = AuthenticationBloc(userRepository: userRepository);
+    loginApiProvider = MockLoginProvider();
+    authenticationBloc = AuthenticationBloc(loginApiProvider: loginApiProvider);
   });
 
   test('initial state is correct', () {
@@ -33,7 +33,7 @@ void main() {
         AuthenticationUnauthenticated()
       ];
 
-      when(userRepository.hasToken()).thenAnswer((_) => Future.value(false));
+      when(loginApiProvider.hasToken()).thenAnswer((_) => Future.value(false));
 
       expectLater(
         authenticationBloc.state,

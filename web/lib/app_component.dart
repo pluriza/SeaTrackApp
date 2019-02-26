@@ -25,17 +25,18 @@ import 'package:web/src/index.dart';
 )
 class AppComponent implements OnInit, OnDestroy {
   AuthenticationBloc _authenticationBloc;
-  UserRepository _userRepository;
+  LoginApiProvider _loginApiProvider;
 
-  UserRepository get userRepository => _userRepository;
+  LoginApiProvider get loginApiProvider => _loginApiProvider;
   AuthenticationBloc get authenticationBloc => _authenticationBloc;
 
   @override
   void ngOnInit() {
-    _userRepository = UserRepository();
-    _authenticationBloc = AuthenticationBloc(userRepository: _userRepository);
+    _loginApiProvider = LoginApiProvider();
+    print('Login Api Provider: $loginApiProvider');
+    _authenticationBloc = AuthenticationBloc(
+      loginApiProvider: _loginApiProvider);
     _authenticationBloc.dispatch(AppStarted());
-    print('Authentication State: ${_authenticationBloc.initialState}');
   }
 
   @override

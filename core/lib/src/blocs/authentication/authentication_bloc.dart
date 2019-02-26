@@ -2,16 +2,17 @@ import 'dart:async';
 
 import 'package:meta/meta.dart';
 import 'package:bloc/bloc.dart';
-import 'package:core/src/mock/user_repository.dart';
 
 import 'package:core/src/blocs/authentication.dart';
+import 'package:core/src/networking/login_api.dart';
 
 class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
-  final UserRepository userRepository;
+  final LoginApiProvider loginApiProvider;
 
-  AuthenticationBloc({@required this.userRepository})
-      : assert(userRepository != null, 'userRepository missing at AuthBloc');
+  AuthenticationBloc({@required this.loginApiProvider})
+      : assert(loginApiProvider != null,
+      'loginApiProvider missing at AuthBloc');
 
   @override
   AuthenticationState get initialState => AuthenticationUninitialized();
@@ -27,7 +28,7 @@ class AuthenticationBloc
     AuthenticationEvent event,
   ) async* {
     if (event is AppStarted) {
-      final hasToken = await userRepository.hasToken();
+      final hasToken = await loginApiProvider.hasToken();
 
       if (hasToken) {
         yield AuthenticationAuthenticated();
@@ -38,13 +39,13 @@ class AuthenticationBloc
 
     if (event is LoggedIn) {
       yield AuthenticationLoading();
-      await userRepository.persistToken(event.token);
+      await loginApiProvider.persistToken(event.token);
       yield AuthenticationAuthenticated();
     }
 
     if (event is LoggedOut) {
       yield AuthenticationLoading();
-      await userRepository.deleteToken();
+      await loginApiProvider.deleteToken();
       yield AuthenticationUnauthenticated();
     }
   }

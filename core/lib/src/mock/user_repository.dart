@@ -6,7 +6,7 @@ class UserRepository {
     @required String password,
   }) async {
     await Future.delayed(Duration(seconds: 1));
-    return 'token';
+    return null;
   }
 
   Future<void> deleteToken() async {
