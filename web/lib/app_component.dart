@@ -1,8 +1,11 @@
 import 'package:angular/angular.dart';
 import 'package:angular_components/angular_components.dart';
 import 'package:angular_forms/angular_forms.dart';
+import 'package:angular_router/angular_router.dart';
 
 import 'package:web/src/index.dart';
+import 'package:web/src/route_paths.dart';
+import 'src/routes.dart';
 
 // AngularDart info: https://webdev.dartlang.org/angular
 // Components info: https://webdev.dartlang.org/components
@@ -18,11 +21,13 @@ import 'package:web/src/index.dart';
     coreDirectives,
     formDirectives,
     materialInputDirectives,
-    LoginComponent
+    routerDirectives,
+    FooterComponent
   ],
   providers: [
     materialProviders
-  ]
+  ],
+  exports: [RoutePaths, Routes]
 )
 class AppComponent {
   // Nothing here yet. All logic is in TodoListComponent.

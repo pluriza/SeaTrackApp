@@ -6,7 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" type="image/png" href="favicon.png">
-    <script defer src="main.dart.js"></script>
+    <script defer src="main.dart.js">
+   </script>
+   <script>
+      (function () {
+      var m = document.location.pathname.match(/^(\/[-\w]+)+\/web($|\/)/);
+      document.write('<base href="' + (m ? m[0] : '/') + '" />');
+    }());
+   </script>
   </head>
   <body>
     <my-app>Loading...</my-app>
