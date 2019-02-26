@@ -19,7 +19,7 @@ import 'package:core/core.dart';
 )
 
 class LoginComponent implements OnInit, OnDestroy {
-  @Input() UserRepository userRepository;
+  @Input() LoginApiProvider loginApiProvider;
   @Input() AuthenticationBloc authenticationBloc;
 
   LoginBloc _loginBloc;
@@ -28,7 +28,7 @@ class LoginComponent implements OnInit, OnDestroy {
   @override
   void ngOnInit() {
     _loginBloc = LoginBloc(
-      userRepository: userRepository,
+      loginApiProvider: loginApiProvider,
       authenticationBloc: authenticationBloc
     );
   }
