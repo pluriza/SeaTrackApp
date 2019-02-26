@@ -1,6 +1,7 @@
-<div class="container">
-    <h1 style="text-align: center">SeaTrack App</h1>
+<header-menu *ngIf = "show == 'false'"></header-menu>
+<div [ngClass]="{'generalContent': show == 'false'}">    
     <router-outlet [routes]="Routes.all"></router-outlet>
 </div>
+<footer-page *ngIf = "show == 'false'"></footer-page>
 
 

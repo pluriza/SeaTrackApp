@@ -39,6 +39,6 @@ class LoginComponent implements OnInit, OnDestroy {
   LoginComponent(this.router);
 
   void loginUser() {
-    this.router.navigateByUrl('footer');
+    router.navigateByUrl('dashboard');
   }
 }
