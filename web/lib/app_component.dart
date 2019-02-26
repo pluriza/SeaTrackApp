@@ -35,7 +35,6 @@ class AppComponent implements OnInit, OnDestroy {
     _userRepository = UserRepository();
     _authenticationBloc = AuthenticationBloc(userRepository: _userRepository);
     _authenticationBloc.dispatch(AppStarted());
-    print('Authentication State: ${_authenticationBloc.initialState}');
   }
 
   @override

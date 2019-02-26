@@ -40,9 +40,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           username: event.username,
           password: event.password,
         );
-
-        authenticationBloc.dispatch(LoggedIn(token: token));
-        yield LoginInitial();
+        if (token != null) {
+          authenticationBloc.dispatch(LoggedIn(token: token));
+          yield LoginInitial();
+        } else {
+          yield LoginFailure(error: 'Invalid Token');
+        }
       } on Exception catch(error) {
         yield LoginFailure(error: error.toString());
       }
