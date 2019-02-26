@@ -1,10 +1,10 @@
 class LoginModel {
-  final String username;
-  final String token;
-  final String password;
-  final int userId;
+  String username;
+  String token;
+  String password;
+  int userId;
 
-  LoginModel(this.username, this.token, this.password, this.userId);
+  LoginModel(this.username, this.password, [this.token, this.userId]);
 
   LoginModel.fromJson(Map<String, dynamic> json)
       : username = json['username'],

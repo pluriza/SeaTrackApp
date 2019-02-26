@@ -4,7 +4,6 @@ import 'package:angular_components/angular_components.dart';
 import 'package:angular_forms/angular_forms.dart';
 
 import 'package:core/core.dart';
-import 'package:web/src/index.dart';
 
 @Component(
   selector: 'login-page',
@@ -24,6 +23,7 @@ class LoginComponent implements OnInit, OnDestroy {
   @Input() AuthenticationBloc authenticationBloc;
 
   LoginBloc _loginBloc;
+  LoginModel credentials = LoginModel(null, null);
 
   @override
   void ngOnInit() {
@@ -39,7 +39,12 @@ class LoginComponent implements OnInit, OnDestroy {
   }
 
   void onSubmit() {
+    print('Credentials Data on Submit: \n${credentials.toJson()}');
     _loginBloc.dispatch(
-      LoginButtonPressed(username: 'admin', password: '1234'));
+      LoginButtonPressed(
+        username: credentials.username,
+        password: credentials.password,
+      )
+    );
   }
 }
