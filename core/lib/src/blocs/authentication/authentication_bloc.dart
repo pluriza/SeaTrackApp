@@ -11,10 +11,15 @@ class AuthenticationBloc
   final UserRepository userRepository;
 
   AuthenticationBloc({@required this.userRepository})
-      : assert(userRepository != null);
+      : assert(userRepository != null, 'userRepository missing at AuthBloc');
 
   @override
   AuthenticationState get initialState => AuthenticationUninitialized();
+
+  @override
+  void onTransition(Transition transition) {
+    print('Authentication Bloc Current State: ${transition.currentState}');
+  }
 
   @override
   Stream<AuthenticationState> mapEventToState(
