@@ -78,6 +78,7 @@ class _LoginFormState extends State<LoginForm> {
                       obscureText: true
                     ),
                     SeaButton (
+                      buttonType: SeaButtonRaisedType(),
                       onClicked: _onLoginButtonPressed,
                       title:'Sign In'
                     )
