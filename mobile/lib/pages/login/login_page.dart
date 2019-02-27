@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile/pages/login/login_form.dart';
-import 'package:core/src/mock/user_repository.dart';
+import 'package:core/src/networking/login_api.dart';
 import 'package:core/src/blocs/login.dart';
 import 'package:core/src/blocs/authentication.dart';
 
 class LoginPage extends StatefulWidget {
 
-  final UserRepository userRepository;
+  final LoginApiProvider loginApiProvider;
 
-  LoginPage({Key key, @required this.userRepository})
-    : assert(userRepository != null),
+  LoginPage({Key key, @required this.loginApiProvider})
+    : assert(loginApiProvider != null),
       super(key: key);
 
   @override
@@ -21,7 +21,7 @@ class _LoginPageState extends State<LoginPage> {
   LoginBloc _loginBloc;
   AuthenticationBloc _authenticationBloc;
 
-  UserRepository get _userRepository => widget.userRepository;
+  LoginApiProvider get _loginApiProvider => widget.loginApiProvider;
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +46,7 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     _authenticationBloc = BlocProvider.of<AuthenticationBloc>(context);
     _loginBloc = LoginBloc(
-      userRepository: _userRepository,
+      loginApiProvider: _loginApiProvider,
       authenticationBloc: _authenticationBloc
     );
     super.initState();
