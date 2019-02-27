@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:mobile/pages/login/login_page.dart';
+import 'package:mobile/shared/splash/splash.dart';
 import 'package:core/src/networking/login_api.dart';
 import 'package:core/src/blocs/authentication.dart';
 
@@ -21,6 +23,8 @@ class _AppState extends State<App> {
   AuthenticationBloc authenticationBloc;
   LoginApiProvider get loginApiProvider => widget.loginApiProvider;
 
+  bool _loadingAuthentication = false;
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider<AuthenticationBloc> (
@@ -31,18 +35,19 @@ class _AppState extends State<App> {
           builder: (BuildContext context, AuthenticationState state) {
             if (state is AuthenticationUninitialized) {
               // Splash page
-              return LoginPage(loginApiProvider: loginApiProvider);
+              return SplashPage();
             }
             if (state is AuthenticationAuthenticated) {
               // Home page
-              return LoginPage(loginApiProvider: loginApiProvider);
+              return SplashPage();
             }
-            if (state is AuthenticationUnauthenticated) {
-              return LoginPage(loginApiProvider: loginApiProvider);
-            }
-            if (state is AuthenticationLoading) {
-              // Loading Indicator
-              return LoginPage(loginApiProvider: loginApiProvider);
+            if (state is AuthenticationUnauthenticated || state is AuthenticationLoading) {
+              this._loadingAuthentication = state is AuthenticationLoading ? true : false;
+              return ModalProgressHUD(
+                child:LoginPage(loginApiProvider: loginApiProvider),
+                inAsyncCall: this._loadingAuthentication,
+                color: Colors.indigo,
+              );
             }
           }
         )
