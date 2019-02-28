@@ -7,13 +7,15 @@ class AppRoutes {
   static final RouteDefinition login = RouteDefinition(
     routePath: AppRoutePaths.login,
     component: login_template.LoginComponentNgFactory,
-    useAsDefault: true,
   );
+
   static final RouteDefinition dashboard = RouteDefinition(
     routePath: AppRoutePaths.dashboard,
     component: dashboard_template.DashboardComponentNgFactory,
+    useAsDefault: true,
   );
 
+  // Routes.all call this Array to display its content on router-outlet.
   static final List<RouteDefinition> all = <RouteDefinition>[
     login,
     dashboard,

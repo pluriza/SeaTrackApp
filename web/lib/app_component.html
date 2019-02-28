@@ -1,10 +1,4 @@
 <h1>SeaTrack App Component Page</h1>
-<login-page [loginApiProvider]="loginApiProvider" [authenticationBloc]="authenticationBloc"></login-page>
-
-<header-menu *ngIf = "show == 'false'"></header-menu>
-<div [ngClass]="{'generalContent': show == 'false'}">    
-    <router-outlet [routes]="AppRoutes.all"></router-outlet>
-</div>
-<footer-page *ngIf = "show == 'false'"></footer-page>
-
+<!-- <login-page [loginApiProvider]="loginApiProvider" [authenticationBloc]="authenticationBloc"></login-page> -->
+<router-outlet [routes]="AppRoutes.all"></router-outlet>
 
