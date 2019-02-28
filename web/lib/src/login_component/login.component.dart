@@ -2,6 +2,7 @@ import 'package:angular/angular.dart';
 import 'package:angular_bloc/angular_bloc.dart';
 import 'package:angular_components/angular_components.dart';
 import 'package:angular_forms/angular_forms.dart';
+import 'package:angular_router/angular_router.dart';
 
 import 'package:core/core.dart';
 
@@ -13,6 +14,10 @@ import 'package:core/core.dart';
     coreDirectives, 
     formDirectives,
     materialInputDirectives,
+    MaterialIconComponent,
+    MaterialTooltipTargetDirective,
+    MaterialMultilineInputComponent,
+    MaterialInputComponent,
     MaterialButtonComponent,
   ],
   pipes: [BlocPipe]
@@ -25,6 +30,12 @@ class LoginComponent implements OnInit, OnDestroy {
   LoginBloc _loginBloc;
   LoginModel credentials = LoginModel(null, null);
 
+  // Constructor.
+  LoginComponent(this.router);
+
+  // Router.
+  Router router;
+  
   @override
   void ngOnInit() {
     _loginBloc = LoginBloc(
@@ -38,7 +49,7 @@ class LoginComponent implements OnInit, OnDestroy {
     _loginBloc.dispose();
   }
 
-  void onSubmit() {
+  void loginUser() {
     print('Credentials Data on Submit: \n${credentials.toJson()}');
     _loginBloc.dispatch(
       LoginButtonPressed(
@@ -46,5 +57,6 @@ class LoginComponent implements OnInit, OnDestroy {
         password: credentials.password,
       )
     );
+    // router.navigateByUrl('dashboard');
   }
 }

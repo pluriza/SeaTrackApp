@@ -1,0 +1,42 @@
+section::before {
+        background-image: url('http://farm5.static.flickr.com/4081/5443254934_1f332d633a_o.jpg');
+        background-size: cover;        
+        content: "";
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -4;
+        opacity: 0.2;     
+}
+
+section {
+    display: table;
+    margin: 0 auto;
+    justify-content: center!important;
+    padding: 15px;    
+    max-width: 600px;
+}
+
+img {
+    opacity: 0.5;
+    display: block;
+    margin-left: 25%;
+    margin-right: 25%;
+}
+
+material-button {
+    width: 100%;
+    display: block;
+    background: cornflowerblue;
+    color: aliceblue;
+    font-size: 20px;
+    margin-top: 30px;
+}
+
+material-input {
+    width: 100%;
+    display: block;
+}
