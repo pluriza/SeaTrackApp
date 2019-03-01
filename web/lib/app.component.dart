@@ -5,6 +5,7 @@ import 'package:angular_components/angular_components.dart';
 
 import 'package:core/core.dart';
 import 'package:web/src/index.dart';
+import 'package:web/guards/auth.guard.dart';
 
 // AngularDart info: https://webdev.dartlang.org/angular
 // Components info: https://webdev.dartlang.org/components
@@ -13,9 +14,9 @@ import 'package:web/src/index.dart';
   selector: 'my-app',
   styleUrls: [
     'package:angular_components/app_layout/layout.scss.css',
-    './app_component.css'
+    './app.component.css'
   ],
-  templateUrl: './app_component.html',
+  templateUrl: './app.component.html',
   directives: [
     coreDirectives,
     formDirectives,
@@ -31,36 +32,34 @@ import 'package:web/src/index.dart';
   ],
   exports: [AppRoutePaths, AppRoutes]
 )
-class AppComponent implements OnInit, OnDestroy, CanActivate {
+class AppComponent implements OnInit, OnDestroy {
   // Login BLoC.
   AuthenticationBloc _authenticationBloc;
   LoginApiProvider _loginApiProvider;
 
-  // Routes.
-  final Router router;
+  // // Routes.
+  // final Router router;
 
   // Getter and Setters.
   LoginApiProvider get loginApiProvider => _loginApiProvider;
   AuthenticationBloc get authenticationBloc => _authenticationBloc;
 
   // Constructor.
-  AppComponent(this.router);
+  AppComponent(Router router, AuthGuard authGuard) {
+    authGuard.router = router;
+  }
 
   @override
   void ngOnInit() {
-    print('Router Current State: ${router.current}');
+    // print('Router Current State: ${router.current}');
 
     // This section handles the Login BLoC.
     _loginApiProvider = LoginApiProvider();
-
-    // Print the Login Api Provider
-    print('Login Api Provider: $loginApiProvider');
 
     // Notify the BLoC of new event.
     _authenticationBloc = AuthenticationBloc(
       loginApiProvider: loginApiProvider);
     _authenticationBloc.dispatch(AppStarted());
-    print('Authentication Bloc Init State: ${authenticationBloc.state.toString()}');
   }
 
   @override
@@ -68,14 +67,4 @@ class AppComponent implements OnInit, OnDestroy, CanActivate {
     authenticationBloc.dispose();
   }
 
-  @override
-  Future<bool> canActivate(RouterState current, RouterState next) {
-    if (current.toUrl() != '/login' && (authenticationBloc.state is AuthenticationAuthenticated)) {
-      router.navigate('/login');
-      print('I Cannot Activate');
-      return Future(() => false);
-    }
-    print('I Can Activate');
-    return Future(() => true);
-  }
 }

@@ -27,14 +27,13 @@ class LoginComponent implements OnInit, OnDestroy {
   @Input() LoginApiProvider loginApiProvider;
   @Input() AuthenticationBloc authenticationBloc;
 
+  // Router.
+  Router router;
   LoginBloc _loginBloc;
   LoginModel credentials = LoginModel(null, null);
 
   // Constructor.
   LoginComponent(this.router);
-
-  // Router.
-  Router router;
   
   @override
   void ngOnInit() {
@@ -51,7 +50,6 @@ class LoginComponent implements OnInit, OnDestroy {
   }
 
   void loginUser() {
-    print('Credentials Data on Submit: \n${credentials.toJson()}');
     _loginBloc.dispatch(
       LoginButtonPressed(
         username: credentials.username,
