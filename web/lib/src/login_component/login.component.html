@@ -1,15 +1,13 @@
-<material-content>
-    <form>
-        <div class="form-group">
-            <material-input floatingLabel type="text" label="Username" [(ngModel)]="credentials.username" ngControl="username" required></material-input>
-        </div>
-        <div class="form-group">
-            <material-input floatingLabel type="text" label="Password" [(ngModel)]="credentials.password" ngControl="password" required></material-input>
-        </div>
-        <div class="row">
-            <div class="col-auto">
-                <material-button raised compact (click)="onSubmit()">Compact</material-button>
-            </div>
-        </div>
-    </form>
-</material-content>
+<section>
+    <h1 style="text-align: center">SeaTrack App</h1>
+    <img src="https://i.etsystatic.com/13221305/r/il/abdd68/1224018852/il_570xN.1224018852_ryip.jpg" width="50%">
+    <material-input [(ngModel)]="credentials.username" ngControl="username" leadingGlyph="account_circle"
+        leadingGlyphAriaLabel="Username" floatingLabel type="text" label="Username" required>
+    </material-input>
+    <br>
+    <material-input [(ngModel)]="credentials.password" ngControl="password" leadingGlyph="security"
+        leadingGlyphAriaLabel="Password" floatingLabel type="text" label="Password" required>
+    </material-input>
+    <br>
+    <material-button raised compact (click)="loginUser()">Login</material-button>
+</section>
