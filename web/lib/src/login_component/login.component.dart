@@ -38,6 +38,7 @@ class LoginComponent implements OnInit, OnDestroy {
   
   @override
   void ngOnInit() {
+    print(loginApiProvider);
     _loginBloc = LoginBloc(
       loginApiProvider: loginApiProvider,
       authenticationBloc: authenticationBloc

@@ -1,4 +1,3 @@
-import 'dart:html';
 import 'package:angular/angular.dart';
 import 'package:angular_router/angular_router.dart';
 import 'package:angular_forms/angular_forms.dart';
@@ -23,34 +22,33 @@ import 'package:web/src/index.dart';
     materialInputDirectives,
     routerDirectives,
     FooterComponent,
-    HeaderComponent,
+    NavBarComponent,
     LoginComponent,
   ],
   providers: [
-    materialProviders
+    materialProviders,
+    LoginApiProvider
   ],
   exports: [AppRoutePaths, AppRoutes]
 )
-class AppComponent implements OnInit, OnDestroy {
+class AppComponent implements OnInit, OnDestroy, CanActivate {
   // Login BLoC.
   AuthenticationBloc _authenticationBloc;
   LoginApiProvider _loginApiProvider;
 
   // Routes.
-  Router _router;
+  final Router router;
 
   // Getter and Setters.
   LoginApiProvider get loginApiProvider => _loginApiProvider;
   AuthenticationBloc get authenticationBloc => _authenticationBloc;
 
   // Constructor.
-  AppComponent(this._router, this._authenticationBloc) {
-
-  }
+  AppComponent(this.router);
 
   @override
   void ngOnInit() {
-    window.console.log(_router);
+    print('Router Current State: ${router.current}');
 
     // This section handles the Login BLoC.
     _loginApiProvider = LoginApiProvider();
@@ -58,14 +56,26 @@ class AppComponent implements OnInit, OnDestroy {
     // Print the Login Api Provider
     print('Login Api Provider: $loginApiProvider');
 
-    // 
+    // Notify the BLoC of new event.
     _authenticationBloc = AuthenticationBloc(
-      loginApiProvider: _loginApiProvider);
+      loginApiProvider: loginApiProvider);
     _authenticationBloc.dispatch(AppStarted());
+    print('Authentication Bloc Init State: ${authenticationBloc.state.toString()}');
   }
 
   @override
   void ngOnDestroy() {
-    _authenticationBloc.dispose();
+    authenticationBloc.dispose();
+  }
+
+  @override
+  Future<bool> canActivate(RouterState current, RouterState next) {
+    if (current.toUrl() != '/login' && (authenticationBloc.state is AuthenticationAuthenticated)) {
+      router.navigate('/login');
+      print('I Cannot Activate');
+      return Future(() => false);
+    }
+    print('I Can Activate');
+    return Future(() => true);
   }
 }

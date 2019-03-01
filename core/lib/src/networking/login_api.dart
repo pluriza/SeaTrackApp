@@ -9,32 +9,21 @@ import 'package:core/src/models/login_model.dart';
 class LoginApiProvider {
   final String url = Endpoints.apiURL + Endpoints.settings['auth'];
 
-  Future<String> authenticate({
+  Future<dynamic> authenticate({
     @required String username,
     @required String password,
   }) async {
     final login = LoginModel(username, password);
-    final body = json.encode(login.toJson());;
+    final body = json.encode(login.toJson());
     final headers = {"Content-type": "application/json"};
+    print('Request to $url: ');
     try {
       final response = await http.post(
         url,
         body: body,
         headers: headers
       );
-      // Convert response into JSON Object
-      final responseJson = json.decode(response.body);
-      // Check Response Status Code
-      if (response.statusCode == 200) {
-        // Convert responseJson to LoginModel and get the token.
-        final token = LoginModel.fromJson(responseJson).token;
-        print('Success to retrieve data from $url: $responseJson');
-        return token;
-      } else {
-        // Print a Error Message to the console.
-        print('Failed to retrieve data from $url: $responseJson');
-        return null;
-      }
+      return response;
     } on Error catch (e) {
       print('Server error; cause: $e');
       return null;

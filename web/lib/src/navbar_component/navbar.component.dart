@@ -18,15 +18,5 @@ import 'package:web/src/index.dart';
   exports: [AppRoutes, AppRoutePaths]
 )
 
-class HeaderComponent implements OnInit, OnDestroy {
-
-  @override
-  void ngOnInit() {
-
-  }
-  @override
-  void ngOnDestroy() {
-
-  }
-
+class NavBarComponent {
 }
