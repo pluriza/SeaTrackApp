@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:meta/meta.dart';
 import 'package:bloc/bloc.dart';
 
+import 'package:core/src/models/login_model.dart';
 import 'package:core/src/blocs/authentication.dart';
 import 'package:core/src/blocs/login.dart';
 import 'package:core/src/networking/login_api.dart';
@@ -34,15 +36,23 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   ) async* {
     if (event is LoginButtonPressed) {
       yield LoginLoading();
-      final token = await loginApiProvider.authenticate(
+      final response = await loginApiProvider.authenticate(
           username: event.username,
           password: event.password,
       );
-      if (token != null) {
+      // Convert response into JSON Object
+      final responseJson = json.decode(response.body);
+      // Check Response Status Code
+      if (response.statusCode == 200) {
+        print('Success to retrieve data: $responseJson');
+        // Convert responseJson to LoginModel and get the token.
+        final token = LoginModel.fromJson(responseJson['user']).token;
         authenticationBloc.dispatch(LoggedIn(token: token));
         yield LoginInitial();
       } else {
-        yield LoginFailure(error: 'Invalid Token');
+        print('Failed to retrieve data: $responseJson');
+        // Return the Login Failure with the request error.
+        yield LoginFailure(error: responseJson['message']);
       }
     }
   }
