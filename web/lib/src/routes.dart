@@ -20,7 +20,7 @@ class AppRoutes {
     login,
     dashboard,
     RouteDefinition.redirect(
-      path:'', redirectTo: AppRoutePaths.login.toUrl(),
+      path: '', redirectTo: AppRoutePaths.login.toUrl(),
     ),
   ];
 }
