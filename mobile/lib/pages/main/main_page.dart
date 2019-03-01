@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flip_box_bar/flip_box_bar.dart';
+import 'package:mobile/shared/app_bar/sea_app_bar.dart';
 
 class MainPage extends StatefulWidget {
 
@@ -12,22 +13,37 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold (
-      appBar: AppBar(
-        title: Text('Dashboard')
+      appBar: SeaAppBar(),
+      body: Column(
+        children: <Widget>[],
       ),
-      body: Column(), //
       bottomNavigationBar: FlipBoxBar (
         items: [
           FlipBarItem(
+              icon: Icon(Icons.home),
+              text: Text("Home"),
+              frontColor: Colors.blue[900],
+              backColor: Colors.blueAccent),
+            FlipBarItem(
+              icon: Icon(Icons.business),
+              text: Text("Companies"),
+              frontColor: Colors.blue[800],
+              backColor: Colors.blueAccent),
+            FlipBarItem(
+              icon: Icon(Icons.directions_boat),
+              text: Text("Vessels"),
+              frontColor: Colors.blue[700],
+              backColor: Colors.blueAccent),
+            FlipBarItem(
               icon: Icon(Icons.dashboard),
               text: Text("Users"),
-              frontColor: Colors.blue,
+              frontColor: Colors.blue[600],
               backColor: Colors.blueAccent),
-          FlipBarItem(
-              icon: Icon(Icons.person),
-              text: Text("Profile"),
-              frontColor: Colors.cyan,
-              backColor: Colors.cyanAccent)
+            FlipBarItem(
+              icon: Icon(Icons.trending_up),
+              text: Text("Reports"),
+              frontColor: Colors.blue,
+              backColor: Colors.blueAccent)
         ],
         onIndexChanged: (newIndex) {
           print(newIndex);
