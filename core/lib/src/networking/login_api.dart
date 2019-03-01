@@ -13,9 +13,15 @@ class LoginApiProvider {
     @required String username,
     @required String password,
   }) async {
-    final body = LoginModel(username, password);
+    final login = LoginModel(username, password);
+    final body = json.encode(login.toJson());;
+    final headers = {"Content-type": "application/json"};
     try {
-      final response = await http.post(url, body: json.encode(body.toJson()));
+      final response = await http.post(
+        url,
+        body: body,
+        headers: headers
+      );
       // Convert response into JSON Object
       final responseJson = json.decode(response.body);
       // Check Response Status Code

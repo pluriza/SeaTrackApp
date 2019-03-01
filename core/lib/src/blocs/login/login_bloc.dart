@@ -43,7 +43,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         yield LoginInitial();
       } else {
         yield LoginFailure(error: 'Invalid Token');
-        yield LoginInitial();
       }
     }
   }
