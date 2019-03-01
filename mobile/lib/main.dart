@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:mobile/pages/login/login_page.dart';
+import 'package:mobile/pages/main/main_page.dart';
 import 'package:mobile/shared/splash/splash.dart';
 import 'package:core/src/networking/login_api.dart';
 import 'package:core/src/blocs/authentication.dart';
@@ -34,12 +35,10 @@ class _AppState extends State<App> {
           bloc: authenticationBloc,
           builder: (BuildContext context, AuthenticationState state) {
             if (state is AuthenticationUninitialized) {
-              // Splash page
               return SplashPage();
             }
             if (state is AuthenticationAuthenticated) {
-              // Home page
-              return SplashPage();
+              return MainPage();
             }
             if (state is AuthenticationUnauthenticated || state is AuthenticationLoading) {
               this._loadingAuthentication = state is AuthenticationLoading ? true : false;
