@@ -1,7 +1,7 @@
 class Endpoints {
   static const String apiURL = "http://localhost:3000";
   static const Map<String, String> settings = {
-    "auth": '/users/auth',
+    "auth": '/api/users/auth',
     "settings": '',
   };
 

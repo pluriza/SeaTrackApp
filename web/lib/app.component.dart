@@ -6,6 +6,7 @@ import 'package:angular_components/angular_components.dart';
 import 'package:core/core.dart';
 import 'package:web/src/index.dart';
 import 'package:web/guards/auth.guard.dart';
+import 'package:web/services/services.dart';
 
 // AngularDart info: https://webdev.dartlang.org/angular
 // Components info: https://webdev.dartlang.org/components
@@ -27,44 +28,28 @@ import 'package:web/guards/auth.guard.dart';
     LoginComponent,
   ],
   providers: [
-    materialProviders,
-    LoginApiProvider
+    materialProviders
   ],
   exports: [AppRoutePaths, AppRoutes]
 )
 class AppComponent implements OnInit, OnDestroy {
   // Login BLoC.
-  AuthenticationBloc _authenticationBloc;
-  LoginApiProvider _loginApiProvider;
-
-  // // Routes.
-  // final Router router;
-
-  // Getter and Setters.
-  LoginApiProvider get loginApiProvider => _loginApiProvider;
-  AuthenticationBloc get authenticationBloc => _authenticationBloc;
-
-  // Constructor.
-  AppComponent(Router router, AuthGuard authGuard) {
-    authGuard.router = router;
-  }
+  final StorageService _storageService = StorageService();
+  AuthenticationBloc authBloc;
 
   @override
   void ngOnInit() {
-    // print('Router Current State: ${router.current}');
-
     // This section handles the Login BLoC.
-    _loginApiProvider = LoginApiProvider();
 
     // Notify the BLoC of new event.
-    _authenticationBloc = AuthenticationBloc(
-      loginApiProvider: loginApiProvider);
-    _authenticationBloc.dispatch(AppStarted());
+    authBloc = AuthenticationBloc(
+      storageProvider: _storageService);
+    authBloc.dispatch(AppStarted());
   }
 
   @override
   void ngOnDestroy() {
-    authenticationBloc.dispose();
+    authBloc.dispose();
   }
 
 }

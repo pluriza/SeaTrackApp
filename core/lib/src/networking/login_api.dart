@@ -29,22 +29,14 @@ class LoginApiProvider {
       return null;
     }
   }
+}
 
-  Future<void> deleteToken() async {
-    /// delete from keystore/keychain
-    await Future.delayed(Duration(seconds: 1));
-    return;
-  }
 
-  Future<void> persistToken(String token) async {
-    /// write to keystore/keychain
-    await Future.delayed(Duration(seconds: 1));
-    return;
-  }
-
-  Future<bool> hasToken() async {
-    /// read from keystore/keychain
-    await Future.delayed(Duration(seconds: 1));
-    return false;
-  }
+abstract class StorageProvider {
+  /// Get/Load Token from LocalStorage or keychain/keystring.
+  Future<bool> hasToken(String pathOrKey);
+  /// Set/Persist Token to LocalStorage or keychain/keystring.
+  Future<void> persistToken(String pathOrKey, String payload);
+  /// Delete Token from LocalStorage or keychain/keystring.
+  Future<void> deleteToken(String pathOrKey);
 }
