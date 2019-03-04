@@ -14,8 +14,8 @@ class AuthenticationBloc
   AuthenticationBloc({@required this.storageProvider})
       : assert(
             storageProvider != null,
-            'The "storageProvider" argument'
-            'is missing at AuthenticationBloc constructor');
+            'The storageProvider argument'
+            ' is missing at AuthenticationBloc constructor');
 
   @override
   AuthenticationState get initialState => AuthenticationUninitialized();
@@ -45,7 +45,7 @@ class AuthenticationBloc
     if (event is LoggedIn) {
       yield AuthenticationLoading();
       await storageProvider.persistToken(
-          Endpoints.sessionStorageKey, event.token);
+          Endpoints.sessionStorageKey, event.data);
       yield AuthenticationAuthenticated();
     }
 

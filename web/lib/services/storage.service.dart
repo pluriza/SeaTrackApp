@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:html';
 import 'package:core/core.dart';
 
@@ -11,8 +12,8 @@ class StorageService implements StorageProvider {
   }
 
   @override
-  Future<void> persistToken(String pathOrKey, String payload) async {
-    window.localStorage[pathOrKey] = payload;
+  Future<void> persistToken(String pathOrKey, SeatrackSession payload) async {
+    window.localStorage[pathOrKey] = json.encode(payload);
     return;
   }
 

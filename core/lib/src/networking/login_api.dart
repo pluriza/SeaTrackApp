@@ -36,7 +36,7 @@ abstract class StorageProvider {
   /// Get/Load Token from LocalStorage or keychain/keystring.
   Future<String> hasToken(String pathOrKey);
   /// Set/Persist Token to LocalStorage or keychain/keystring.
-  Future<void> persistToken(String pathOrKey, String payload);
+  Future<void> persistToken(String pathOrKey, SeatrackSession data);
   /// Delete Token from LocalStorage or keychain/keystring.
   Future<void> deleteToken(String pathOrKey);
 }

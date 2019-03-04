@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:convert';
 
 import 'package:meta/meta.dart';
@@ -18,12 +17,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     @required this.authenticationBloc,
   })  : assert(
             loginApiProvider != null,
-            'The "loginApiProvider" argument'
-            'is missing at LoginBloc constructor'),
+            'The loginApiProvider argument'
+            ' is missing at LoginBloc constructor'),
         assert(
             authenticationBloc != null,
-            'The "authenticationBloc" argument'
-            'is missing at LoginBloc constructor');
+            'The authenticationBloc argument'
+            ' is missing at LoginBloc constructor');
 
   @override
   LoginState get initialState => LoginInitial();
@@ -50,9 +49,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       // Check Response Status Code
       if (response.statusCode == 200) {
         print('Success to retrieve data: $responseJson');
-        // Convert responseJson to LoginModel and get the token.
-        final token = LoginModel.fromJson(responseJson['user']).token;
-        authenticationBloc.dispatch(LoggedIn(token: token));
+        // Convert responseJson to SeatrackSession and get the token.
+        final session = SeatrackSession.fromJson(responseJson['user']);
+        authenticationBloc.dispatch(LoggedIn(data: session));
         yield LoginInitial();
       } else {
         print('Failed to retrieve data: $responseJson');
