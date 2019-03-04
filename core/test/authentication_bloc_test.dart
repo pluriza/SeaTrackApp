@@ -35,7 +35,7 @@ void main() {
       ];
 
       when(loginApiProvider.hasToken(sessionStorageKey))
-          .thenAnswer((_) => Future.value(false));
+          .thenAnswer((_) => SeatrackSession());
 
       expectLater(
         authenticationBloc.state,
@@ -62,7 +62,7 @@ void main() {
       );
 
       authenticationBloc.dispatch(LoggedIn(
-        token: 'instance.token',
+        data: SeatrackSession(token: 'akslka', userId: '1'),
       ));
     });
   });

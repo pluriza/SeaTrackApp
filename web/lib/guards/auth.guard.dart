@@ -1,41 +1,88 @@
 import 'package:angular_router/angular_router.dart';
 import 'package:core/core.dart';
+import 'package:web/src/route_paths.dart';
+import 'package:web/services/auth.service.dart';
 
-class AuthGuard implements RouterHook {
-  Router _router;
-  AuthenticationState _authBlocState;
+class AuthGuard extends RouterHook {
+  final AuthService _authService;
+  final String loginPath = AppRoutePaths.login.toUrl();
+  final String dashboardPath = AppRoutePaths.dashboard.toUrl();
+  AuthenticationState state;
+  SeatrackSession userSession;
+  String redirect;
 
-  AuthGuard(Router router, AuthenticationState authBlocState)
-      : _router = router,
-        _authBlocState = authBlocState;
+  AuthGuard(this._authService);
 
   @override
-  Future<bool> canActivate(
-      Object componentInstance, RouterState current, RouterState next) async {
-    // Make the default behavior to block all LoginRequired components
-    // unless logged in.
-    if (current.toUrl() != '/login') {
-      await _router.navigate('/login');
-      print('I Cannot Activate');
-      return false;
+  Future<String> navigationPath(String path, NavigationParams params) {
+    if (!_authService.authenticated) {
+      redirect = path.isNotEmpty ? path : null;
+      if (params != null && params.queryParameters.containsKey('redirect')) {
+        redirect = params.queryParameters['redirect'];
+      }
+      if (redirect == loginPath) {
+        redirect = null;
+      }
+      return Future(() => loginPath);
     }
-    print('I Can Activate');
-    return true;
+    return Future(() => dashboardPath);
   }
 
   @override
-  Future<bool> canNavigate() async {
-    print('Can Navigate');
-    if (_authBlocState is AuthenticationAuthenticated) {
-      print('Yes, it can');
-      return true;
+  Future<NavigationParams> navigationParams(
+      String path, NavigationParams params) async {
+    if (!_authService.authenticated) {
+      var qp = <String, String>{};
+      if (params != null) {
+        qp.addAll(params.queryParameters);
+      }
+      redirect != null ? qp['redirect'] = redirect : qp.remove('redirect');
+      return NavigationParams(queryParameters: qp);
     }
-    print('Nope');
-    return false;
+    return params;
   }
 
   // Implement noSuchMethod(): When a class has a noSuchMethod()
   // it implements any method.
   // Hence, warning "Missing concrete implementation" gets supressed.
-  dynamic noSuchMethod(Invocation i) => super.noSuchMethod(i);
+  // dynamic noSuchMethod(Invocation i) => super.noSuchMethod(i);
 }
+
+// class RouteHook extends RouterHook {
+//   final LoginService _loginService;
+//   User user;
+//   String redirect;
+
+//   RouteHook(this._loginService);
+
+//   @override
+//   Future<String> navigationPath(String path, NavigationParams params) async {
+//     user = await _loginService.fetchUser(checkSrv: true);
+//     if (user == null) {
+//       var loginPath = RoutePaths.login.toUrl();
+//       redirect = path.length > 0 ? path : null;
+//       if (params != null && params.queryParameters.containsKey('redirect')) {
+//         redirect = params.queryParameters['redirect'];
+//       }
+//       if (redirect == loginPath) {
+//         redirect = null;
+//       }
+//       return loginPath;
+//     }
+//     return path;
+//   }
+
+//   @override
+//   Future<NavigationParams> navigationParams(
+//       String path, NavigationParams params) async {
+//     if (user == null) {
+//       var qp = Map<String, String>();
+//       if (params != null) {
+//         qp.addAll(params.queryParameters);
+//       }
+//       redirect != null ? qp['redirect'] = redirect : qp.remove('redirect');
+//       return NavigationParams(queryParameters: qp);
+//     }
+//     return params;
+//   }
+// }

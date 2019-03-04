@@ -2,6 +2,7 @@ import 'package:angular/angular.dart';
 import 'package:web/app.component.template.dart' as ng;
 import 'package:angular_router/angular_router.dart';
 import 'package:web/guards/auth.guard.dart';
+import 'package:web/services/auth.service.dart';
 
 // Import the main.dart file to reference it within the program as “self”
 import 'main.template.dart' as self;
@@ -11,6 +12,7 @@ const bool useHashLS = false;
 // available to every component within our program.
 @GenerateInjector([
   routerProvidersHash,
+  ClassProvider(AuthService),
   ClassProvider(AuthGuard),
   ExistingProvider(RouterHook, AuthGuard)
 ])

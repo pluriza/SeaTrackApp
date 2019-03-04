@@ -1,9 +1,7 @@
 import 'package:angular/angular.dart';
-import 'package:angular_bloc/angular_bloc.dart';
 import 'package:angular_components/angular_components.dart';
 import 'package:angular_forms/angular_forms.dart';
-import 'package:angular_router/angular_router.dart';
-
+import 'package:web/services/auth.service.dart';
 import 'package:core/core.dart';
 
 @Component(
@@ -21,37 +19,24 @@ import 'package:core/core.dart';
       MaterialMultilineInputComponent,
       MaterialInputComponent,
       MaterialButtonComponent,
-    ],
-    pipes: [
-      BlocPipe
     ])
 class LoginComponent implements OnInit, OnDestroy {
-  @Input() AuthenticationBloc authBloc;
-
-  final LoginApiProvider _loginApiProvider = LoginApiProvider();
-  
-  LoginBloc loginBloc;
+  final AuthService _authService;
   LoginModel credentials = LoginModel(null, null);
 
-  // Constructor.
-
+  LoginComponent(this._authService);
 
   @override
   void ngOnInit() {
-    loginBloc = LoginBloc(
-        loginApiProvider: _loginApiProvider,
-        authenticationBloc: authBloc);
+    _authService.initLoginBloc();
   }
 
   @override
   void ngOnDestroy() {
-    loginBloc.dispose();
+    _authService.disposeLoginBloc();
   }
 
   void loginUser() {
-    loginBloc.dispatch(LoginButtonPressed(
-      username: credentials.username,
-      password: credentials.password,
-    ));
+    _authService.authenticateUserOnLogin(credentials);
   }
 }
