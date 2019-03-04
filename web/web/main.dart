@@ -11,8 +11,8 @@ const bool useHashLS = false;
 // available to every component within our program.
 @GenerateInjector([
   routerProvidersHash,
-  ClassProvider(AuthGuard),
-  ExistingProvider(RouterHook, AuthGuard)
+  // ClassProvider(AuthGuard),
+  Provider(RouterHook, useClass: AuthGuard)
 ])
 // Generates an Injector Factory at compile time.
 // $Injector is used to retrieve object instances as defined by router provider.

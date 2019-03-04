@@ -5,10 +5,11 @@ import 'package:core/core.dart';
 class StorageService implements StorageProvider {
 
   @override
-  Future<String> hasToken(String pathOrKey) async {
-    var token = await window.localStorage[pathOrKey];
-    print('Storage Service Has Token? ${token.isNotEmpty}');
-    return token;
+  Future<SeatrackSession> hasToken(String pathOrKey) async {
+    var data = await window.localStorage[pathOrKey];
+    var decodedData = SeatrackSession.fromJson(json.decode(data));
+    print('Storage Service Has Token? ${decodedData.token.isNotEmpty}');
+    return decodedData;
   }
 
   @override
