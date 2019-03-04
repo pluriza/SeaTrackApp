@@ -12,13 +12,12 @@ class AppRoutes {
   static final RouteDefinition dashboard = RouteDefinition(
     routePath: AppRoutePaths.dashboard,
     component: dashboard_template.DashboardComponentNgFactory,
-    useAsDefault: true,
   );
 
   // Routes.all call this Array to display its content on router-outlet.
   static final List<RouteDefinition> all = <RouteDefinition>[
-    login,
     dashboard,
+    login,
     RouteDefinition.redirect(
       path: '', redirectTo: AppRoutePaths.login.toUrl(),
     ),

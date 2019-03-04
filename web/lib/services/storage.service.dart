@@ -7,8 +7,11 @@ class StorageService implements StorageProvider {
   @override
   Future<SeatrackSession> hasToken(String pathOrKey) async {
     var data = await window.localStorage[pathOrKey];
+    if (data == null) {
+      return SeatrackSession();
+    };
     var decodedData = SeatrackSession.fromJson(json.decode(data));
-    print('Storage Service Has Token? ${decodedData.token.isNotEmpty}');
+    print('Storage Service Has Token? ${decodedData?.token}');
     return decodedData;
   }
 
