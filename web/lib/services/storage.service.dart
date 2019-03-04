@@ -5,8 +5,8 @@ import 'package:core/core.dart';
 class StorageService implements StorageProvider {
 
   @override
-  Future<SeatrackSession> hasToken(String pathOrKey) async {
-    var data = await window.localStorage[pathOrKey];
+  SeatrackSession hasToken(String pathOrKey) {
+    var data = window.localStorage[pathOrKey];
     if (data == null) {
       return SeatrackSession();
     };

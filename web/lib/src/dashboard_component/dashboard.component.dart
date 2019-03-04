@@ -1,5 +1,6 @@
-import 'package:angular_bloc/angular_bloc.dart';
 import 'package:angular/angular.dart';
+import 'package:angular_router/angular_router.dart';
+import 'package:web/services/auth.service.dart';
 
 @Component (
   selector: 'dashboard-page',
@@ -7,10 +8,19 @@ import 'package:angular/angular.dart';
   styleUrls: ['./dashboard.component.css'],
   directives: [
     coreDirectives
-  ],
-  pipes: [BlocPipe]
+  ]
 )
 
-class DashboardComponent {
+class DashboardComponent implements CanActivate {
+  final AuthService _authService;
 
+  DashboardComponent(this._authService);
+
+  @override
+  Future<bool> canActivate(RouterState current, RouterState next) async {
+    if (_authService.authenticated) {
+      return true;
+    }
+    return false;
+  }
 }

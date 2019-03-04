@@ -5,7 +5,6 @@ class AuthService {
   final StorageService _storageService = StorageService();
   final LoginApiProvider _loginApiProvider = LoginApiProvider();
 
-  Future _checkToken;
   AuthenticationBloc authBloc;
   LoginBloc loginBloc;
   SeatrackSession session;
@@ -14,16 +13,12 @@ class AuthService {
   AuthService() {
     // Initialize the BLoC's.
     authBloc = AuthenticationBloc(storageProvider: _storageService);
-    _checkToken = _initCheckToken();
-  }
-
-  Future _initCheckToken() async {
-    session = await _storageService.hasToken(Endpoints.sessionStorageKey);
-    bool inSession = session?.token ?? false;
+    session = _storageService.hasToken(Endpoints.sessionStorageKey);
+    var inSession = session?.token?.isNotEmpty ?? false;
     if (inSession) {
       authenticated = true;
     } else {
-      await _storageService.deleteToken(Endpoints.sessionStorageKey);
+      _storageService.deleteToken(Endpoints.sessionStorageKey);
     }
     print('Is Auth? $authenticated');
   }

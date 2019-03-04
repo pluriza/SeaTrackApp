@@ -4,8 +4,9 @@ import 'package:web/src/route_paths.dart';
 import 'package:web/services/auth.service.dart';
 
 class AuthGuard extends RouterHook {
-
   final AuthService _authService;
+  final String loginPath = AppRoutePaths.login.toUrl();
+  final String dashboardPath = AppRoutePaths.dashboard.toUrl();
   AuthenticationState state;
   SeatrackSession userSession;
   String redirect;
@@ -13,11 +14,8 @@ class AuthGuard extends RouterHook {
   AuthGuard(this._authService);
 
   @override
-  Future<String> navigationPath(String path, NavigationParams params) async {
-    state = await _authService.authBloc.currentState;
-    if (state is AuthenticationUnauthenticated) {
-      var loginPath = AppRoutePaths.login.toUrl();
-      print('Login Path: $loginPath');
+  Future<String> navigationPath(String path, NavigationParams params) {
+    if (!_authService.authenticated) {
       redirect = path.isNotEmpty ? path : null;
       if (params != null && params.queryParameters.containsKey('redirect')) {
         redirect = params.queryParameters['redirect'];
@@ -25,17 +23,16 @@ class AuthGuard extends RouterHook {
       if (redirect == loginPath) {
         redirect = null;
       }
-      return loginPath;
+      return Future(() => loginPath);
     }
-    print('Path: $path');
-    return path;
+    return Future(() => dashboardPath);
   }
 
   @override
   Future<NavigationParams> navigationParams(
       String path, NavigationParams params) async {
-    if (state is AuthenticationUnauthenticated) {
-      var qp = {};
+    if (!_authService.authenticated) {
+      var qp = <String, String>{};
       if (params != null) {
         qp.addAll(params.queryParameters);
       }
@@ -50,7 +47,6 @@ class AuthGuard extends RouterHook {
   // Hence, warning "Missing concrete implementation" gets supressed.
   // dynamic noSuchMethod(Invocation i) => super.noSuchMethod(i);
 }
-
 
 // class RouteHook extends RouterHook {
 //   final LoginService _loginService;
