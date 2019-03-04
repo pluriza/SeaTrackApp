@@ -34,7 +34,7 @@ class LoginApiProvider {
 
 abstract class StorageProvider {
   /// Get/Load Token from LocalStorage or keychain/keystring.
-  Future<bool> hasToken(String pathOrKey);
+  Future<String> hasToken(String pathOrKey);
   /// Set/Persist Token to LocalStorage or keychain/keystring.
   Future<void> persistToken(String pathOrKey, String payload);
   /// Delete Token from LocalStorage or keychain/keystring.

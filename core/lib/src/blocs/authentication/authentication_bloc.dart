@@ -5,22 +5,25 @@ import 'package:bloc/bloc.dart';
 
 import 'package:core/src/blocs/authentication.dart';
 import 'package:core/src/networking/login_api.dart';
+import 'package:core/src/networking/endpoints.dart';
 
 class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
   final StorageProvider storageProvider;
-  final String sessionStorageKey = 'seatrack_session';
 
   AuthenticationBloc({@required this.storageProvider})
-      : assert(storageProvider != null,
-      'loginApiProvider missing at AuthBloc');
+      : assert(
+            storageProvider != null,
+            'The "storageProvider" argument'
+            'is missing at AuthenticationBloc constructor');
 
   @override
   AuthenticationState get initialState => AuthenticationUninitialized();
 
   @override
   void onTransition(Transition transition) {
-    print('Authentication Bloc Current State: ${transition.currentState}');
+    print('Authentication Bloc Transition \n'
+        'From ${transition.currentState} to ${transition.nextState} state');
   }
 
   @override
@@ -29,9 +32,10 @@ class AuthenticationBloc
     AuthenticationEvent event,
   ) async* {
     if (event is AppStarted) {
-      final hasToken = await storageProvider.hasToken(sessionStorageKey);
+      final hasToken =
+          await storageProvider.hasToken(Endpoints.sessionStorageKey);
 
-      if (hasToken) {
+      if (hasToken.isNotEmpty) {
         yield AuthenticationAuthenticated();
       } else {
         yield AuthenticationUnauthenticated();
@@ -40,13 +44,14 @@ class AuthenticationBloc
 
     if (event is LoggedIn) {
       yield AuthenticationLoading();
-      await storageProvider.persistToken(sessionStorageKey, event.token);
+      await storageProvider.persistToken(
+          Endpoints.sessionStorageKey, event.token);
       yield AuthenticationAuthenticated();
     }
 
     if (event is LoggedOut) {
       yield AuthenticationLoading();
-      await storageProvider.deleteToken(sessionStorageKey);
+      await storageProvider.deleteToken(Endpoints.sessionStorageKey);
       yield AuthenticationUnauthenticated();
     }
   }
