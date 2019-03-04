@@ -6,9 +6,9 @@ import 'package:angular_router/angular_router.dart';
 import 'package:web/src/index.dart';
 
 @Component (
-  selector: 'header-menu',
-  templateUrl: 'header.component.html',
-  styleUrls: ['header.component.css'],
+  selector: 'navbar',
+  templateUrl: 'navbar.component.html',
+  styleUrls: ['navbar.component.css'],
   directives: [
     coreDirectives,
     routerDirectives,
@@ -18,15 +18,5 @@ import 'package:web/src/index.dart';
   exports: [AppRoutes, AppRoutePaths]
 )
 
-class HeaderComponent implements OnInit, OnDestroy {
-
-  @override
-  void ngOnInit() {
-
-  }
-  @override
-  void ngOnDestroy() {
-
-  }
-
+class NavBarComponent {
 }

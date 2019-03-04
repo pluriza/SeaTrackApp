@@ -62,7 +62,7 @@ class _AppState extends State<App> {
 
   @override
   void initState() {
-    authenticationBloc = AuthenticationBloc(loginApiProvider: loginApiProvider);
+    authenticationBloc = AuthenticationBloc(storageProvider: null);
     authenticationBloc.dispatch(AppStarted());
     super.initState();
   }

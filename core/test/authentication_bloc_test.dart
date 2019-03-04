@@ -3,15 +3,16 @@ import "package:test/test.dart";
 import 'package:mockito/mockito.dart';
 import 'package:core/core.dart';
 
-class MockLoginProvider extends Mock implements LoginApiProvider {}
+class MockLoginProvider extends Mock implements StorageProvider {}
 
 void main() {
   AuthenticationBloc authenticationBloc;
   MockLoginProvider loginApiProvider;
+  final sessionStorageKey = 'seatrack_session';
 
   setUp(() {
     loginApiProvider = MockLoginProvider();
-    authenticationBloc = AuthenticationBloc(loginApiProvider: loginApiProvider);
+    authenticationBloc = AuthenticationBloc(storageProvider: loginApiProvider);
   });
 
   test('initial state is correct', () {
@@ -33,7 +34,8 @@ void main() {
         AuthenticationUnauthenticated()
       ];
 
-      when(loginApiProvider.hasToken()).thenAnswer((_) => Future.value(false));
+      when(loginApiProvider.hasToken(sessionStorageKey))
+          .thenAnswer((_) => Future.value(false));
 
       expectLater(
         authenticationBloc.state,

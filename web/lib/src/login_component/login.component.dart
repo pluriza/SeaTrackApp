@@ -7,56 +7,51 @@ import 'package:angular_router/angular_router.dart';
 import 'package:core/core.dart';
 
 @Component(
-  selector: 'login-page',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
-  directives: [
-    coreDirectives, 
-    formDirectives,
-    materialInputDirectives,
-    MaterialIconComponent,
-    MaterialTooltipTargetDirective,
-    MaterialMultilineInputComponent,
-    MaterialInputComponent,
-    MaterialButtonComponent,
-  ],
-  pipes: [BlocPipe]
-)
-
+    selector: 'login-page',
+    templateUrl: './login.component.html',
+    styleUrls: [
+      './login.component.css'
+    ],
+    directives: [
+      coreDirectives,
+      formDirectives,
+      materialInputDirectives,
+      MaterialIconComponent,
+      MaterialTooltipTargetDirective,
+      MaterialMultilineInputComponent,
+      MaterialInputComponent,
+      MaterialButtonComponent,
+    ],
+    pipes: [
+      BlocPipe
+    ])
 class LoginComponent implements OnInit, OnDestroy {
-  @Input() LoginApiProvider loginApiProvider;
-  @Input() AuthenticationBloc authenticationBloc;
+  @Input() AuthenticationBloc authBloc;
 
-  LoginBloc _loginBloc;
+  final LoginApiProvider _loginApiProvider = LoginApiProvider();
+  
+  LoginBloc loginBloc;
   LoginModel credentials = LoginModel(null, null);
 
   // Constructor.
-  LoginComponent(this.router);
 
-  // Router.
-  Router router;
-  
+
   @override
   void ngOnInit() {
-    _loginBloc = LoginBloc(
-      loginApiProvider: loginApiProvider,
-      authenticationBloc: authenticationBloc
-    );
+    loginBloc = LoginBloc(
+        loginApiProvider: _loginApiProvider,
+        authenticationBloc: authBloc);
   }
 
   @override
   void ngOnDestroy() {
-    _loginBloc.dispose();
+    loginBloc.dispose();
   }
 
   void loginUser() {
-    print('Credentials Data on Submit: \n${credentials.toJson()}');
-    _loginBloc.dispatch(
-      LoginButtonPressed(
-        username: credentials.username,
-        password: credentials.password,
-      )
-    );
-    // router.navigateByUrl('dashboard');
+    loginBloc.dispatch(LoginButtonPressed(
+      username: credentials.username,
+      password: credentials.password,
+    ));
   }
 }

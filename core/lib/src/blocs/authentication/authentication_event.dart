@@ -1,5 +1,6 @@
 import 'package:meta/meta.dart';
 import 'package:equatable/equatable.dart';
+import 'package:core/src/models/login_model.dart';
 
 abstract class AuthenticationEvent extends Equatable {
   AuthenticationEvent([List props = const []]) : super(props);
@@ -13,12 +14,12 @@ class AppStarted extends AuthenticationEvent {
 
 // LoggedIn will be dispatched on a successful login.
 class LoggedIn extends AuthenticationEvent {
-  final String token;
+  final SeatrackSession data;
 
-  LoggedIn({@required this.token}) : super([token]);
+  LoggedIn({@required this.data}) : super([data]);
 
   @override
-  String toString() => 'LoggedIn { token: $token }';
+  String toString() => 'LoggedIn - data: $data';
 }
 
 // LoggedOut will be dispatched on a successful logout. 
