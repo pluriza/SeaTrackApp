@@ -44,7 +44,6 @@ class LoginComponent implements OnInit, OnDestroy {
     _authService.authBloc.state.listen((state) {
       if (state is AuthenticationAuthenticated) {
         _authService.authenticated = true;
-        print('Triggered Navigation!!!');
         _router.navigate(AppRoutePaths.dashboard.toUrl());
       }
     });

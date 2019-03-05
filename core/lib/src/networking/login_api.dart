@@ -16,7 +16,7 @@ class LoginApiProvider {
     final login = LoginModel(username, password);
     final body = json.encode(login.toJson());
     final headers = {"Content-type": "application/json"};
-    print('Request to $url: ');
+    // print('Request to $url: ');
     try {
       final response = await http.post(
         url,

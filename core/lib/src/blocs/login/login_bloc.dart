@@ -27,11 +27,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   @override
   LoginState get initialState => LoginInitial();
 
-  @override
-  void onTransition(Transition transition) {
-    print('Login Bloc Transition \n'
-        'From ${transition.currentState} to ${transition.nextState} state');
-  }
+  // @override
+  // void onTransition(Transition transition) {
+  //   print('Login Bloc Transition \n'
+  //       'From ${transition.currentState} to ${transition.nextState} state');
+  // }
 
   @override
   Stream<LoginState> mapEventToState(
@@ -48,13 +48,13 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       final responseJson = json.decode(response.body);
       // Check Response Status Code
       if (response.statusCode == 200) {
-        print('Success to retrieve data: $responseJson');
+        // print('Success to retrieve data: $responseJson');
         // Convert responseJson to SeatrackSession and get the token.
         final session = SeatrackSession.fromJson(responseJson['user']);
         authenticationBloc.dispatch(LoggedIn(data: session));
         yield LoginInitial();
       } else {
-        print('Failed to retrieve data: $responseJson');
+        // print('Failed to retrieve data: $responseJson');
         // Return the Login Failure with the request error.
         yield LoginFailure(error: responseJson['message']);
       }

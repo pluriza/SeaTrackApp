@@ -20,7 +20,6 @@ class AuthService {
     } else {
       _storageService.deleteToken(Endpoints.sessionStorageKey);
     }
-    print('Is Auth? $authenticated');
   }
 
   void initApp() {

@@ -20,11 +20,11 @@ class AuthenticationBloc
   @override
   AuthenticationState get initialState => AuthenticationUninitialized();
 
-  @override
-  void onTransition(Transition transition) {
-    print('Authentication Bloc Transition \n'
-        'From ${transition.currentState} to ${transition.nextState} state');
-  }
+  // @override
+  // void onTransition(Transition transition) {
+  //   print('Authentication Bloc Transition \n'
+  //       'From ${transition.currentState} to ${transition.nextState} state');
+  // }
 
   @override
   Stream<AuthenticationState> mapEventToState(
