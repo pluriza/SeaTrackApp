@@ -5,13 +5,12 @@ import 'package:core/core.dart';
 class StorageService implements StorageProvider {
 
   @override
-  SeatrackSession hasToken(String pathOrKey) {
+  Future<SeatrackSession> hasToken(String pathOrKey) async {
     var data = window.localStorage[pathOrKey];
     if (data == null) {
       return SeatrackSession();
     };
     var decodedData = SeatrackSession.fromJson(json.decode(data));
-    print('Storage Service Has Token? ${decodedData?.token}');
     return decodedData;
   }
 
@@ -25,5 +24,14 @@ class StorageService implements StorageProvider {
   Future<void> deleteToken(String pathOrKey) async {
     window.localStorage.remove(pathOrKey);
     return;
+  }
+
+  SeatrackSession hasTokenSync(String pathOrKey) {
+    var data = window.localStorage[pathOrKey];
+    if (data == null) {
+      return SeatrackSession();
+    };
+    var decodedData = SeatrackSession.fromJson(json.decode(data));
+    return decodedData;
   }
 }
