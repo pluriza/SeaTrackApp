@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flip_box_bar/flip_box_bar.dart';
 
 import 'package:mobile/shared/app_bar/sea_app_bar.dart';
+import 'package:mobile/pages/main/main_page_sections/main_page_sections.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -21,9 +22,7 @@ class _MainPageState extends State<MainPage> {
     Scaffold(
       body: Text('Vessels page')
     ),
-    Scaffold(
-      body: Text('Users page')
-    ),
+    UsersPage(),
     Scaffold(
       body: Text('Reports page')
     )
