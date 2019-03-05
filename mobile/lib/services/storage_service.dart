@@ -6,34 +6,43 @@ import 'package:core/src/models/login_model.dart';
 import 'package:core/src/networking/login_api.dart';
 
 class StorageService implements StorageProvider {
-  
+
+  SharedPreferences _prefs;
+
   @override
   Future<void> deleteToken(String pathOrKey) async {
-    final prefs = await SharedPreferences.getInstance();
-    prefs.remove(pathOrKey);
+    await getStorageInstance();
+    _prefs.remove(pathOrKey);
   }
 
   @override
-  Future<String> hasToken(String pathOrKey) async {
-    final prefs = await SharedPreferences.getInstance();
-    final String instance = prefs.getString(pathOrKey);
+  SeatrackSession hasToken(String pathOrKey) {
+    //await getStorageInstance();
+    final String instance = _prefs.getString(pathOrKey);
     print('hasTokenInstance => $instance');
     try {
-      final session = json.decode(instance);
-      print('Session => $session');
-      return session['token'];
+      final decodedData = json.decode(instance);
+      final session = SeatrackSession.fromJson(decodedData);
+      print('Session => ${session.toJson()}');
+      return session;
     } catch (err) {
       print('err => $err');
-      return '';
+      return SeatrackSession();
     }
   }
 
   @override
   Future<void> persistToken(String pathOrKey, SeatrackSession data) async {
-    final prefs = await SharedPreferences.getInstance();
+    await getStorageInstance();
     final String instance = json.encode(data.toJson());
     print('Instance => $instance');
-    prefs.setString(pathOrKey, instance);
+    _prefs.setString(pathOrKey, instance);
+  }
+
+  getStorageInstance() async {
+    if (_prefs == null) {
+      _prefs = await SharedPreferences.getInstance();
+    }
   }
 
 }
