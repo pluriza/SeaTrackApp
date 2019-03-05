@@ -32,10 +32,9 @@ class AuthenticationBloc
     AuthenticationEvent event,
   ) async* {
     if (event is AppStarted) {
-      final data = storageProvider.hasToken(Endpoints.sessionStorageKey);
-      bool inSession = data?.token ?? false;
-      print('data: $inSession');
-      if (inSession) {
+      final data = await storageProvider.hasToken(Endpoints.sessionStorageKey);
+      print('data ${data.toJson()}');
+      if (data.token != null) {
         yield AuthenticationAuthenticated();
       } else {
         yield AuthenticationUnauthenticated();

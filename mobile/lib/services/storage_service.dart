@@ -16,8 +16,8 @@ class StorageService implements StorageProvider {
   }
 
   @override
-  SeatrackSession hasToken(String pathOrKey) {
-    //await getStorageInstance();
+  Future<SeatrackSession> hasToken(String pathOrKey) async {
+    await getStorageInstance();
     final String instance = _prefs.getString(pathOrKey);
     print('hasTokenInstance => $instance');
     try {
