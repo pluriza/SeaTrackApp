@@ -20,11 +20,11 @@ class AuthenticationBloc
   @override
   AuthenticationState get initialState => AuthenticationUninitialized();
 
-  @override
-  void onTransition(Transition transition) {
-    print('Authentication Bloc Transition \n'
-        'From ${transition.currentState} to ${transition.nextState} state');
-  }
+  // @override
+  // void onTransition(Transition transition) {
+  //   print('Authentication Bloc Transition \n'
+  //       'From ${transition.currentState} to ${transition.nextState} state');
+  // }
 
   @override
   Stream<AuthenticationState> mapEventToState(
@@ -33,8 +33,8 @@ class AuthenticationBloc
   ) async* {
     if (event is AppStarted) {
       final data = await storageProvider.hasToken(Endpoints.sessionStorageKey);
-      print('data ${data.toJson()}');
-      if (data.token != null) {
+      bool inSession = data?.token ?? false;
+      if (inSession) {
         yield AuthenticationAuthenticated();
       } else {
         yield AuthenticationUnauthenticated();

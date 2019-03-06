@@ -35,7 +35,7 @@ void main() {
       ];
 
       when(loginApiProvider.hasToken(sessionStorageKey))
-          .thenAnswer((_) => SeatrackSession());
+          .thenAnswer((_) => Future(() => SeatrackSession()));
 
       expectLater(
         authenticationBloc.state,

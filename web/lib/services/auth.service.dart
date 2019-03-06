@@ -13,14 +13,13 @@ class AuthService {
   AuthService() {
     // Initialize the BLoC's.
     authBloc = AuthenticationBloc(storageProvider: _storageService);
-    session = _storageService.hasToken(Endpoints.sessionStorageKey);
+    session = _storageService.hasTokenSync(Endpoints.sessionStorageKey);
     var inSession = session?.token?.isNotEmpty ?? false;
     if (inSession) {
       authenticated = true;
     } else {
       _storageService.deleteToken(Endpoints.sessionStorageKey);
     }
-    print('Is Auth? $authenticated');
   }
 
   void initApp() {
